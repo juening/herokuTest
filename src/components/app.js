@@ -6,7 +6,13 @@ class App extends Component {
     return (
       <div>
         <Header />
-        {this.props.children}
+        <div className="row">
+          <div className="columns medium-6 large-4 small-centered">
+            {this.props.children}
+          </div>
+        </div>
+
+
       </div>
     );
   }

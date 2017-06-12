@@ -137,6 +137,10 @@
 	
 	var _weather2 = _interopRequireDefault(_weather);
 	
+	var _about = __webpack_require__(/*! ./components/about */ 279);
+	
+	var _about2 = _interopRequireDefault(_about);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	//load foundation-sites
@@ -150,7 +154,8 @@
 	    _reactRouter.Route,
 	    { path: '/', component: _app2.default },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: 'weather', component: _weather2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: 'weather', component: _weather2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'about', component: _about2.default })
 	  )
 	), document.getElementById('root'));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! jquery */ 7)))
@@ -27955,7 +27960,15 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_header2.default, null),
-	        this.props.children
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'columns medium-6 large-4 small-centered' },
+	            this.props.children
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -28043,7 +28056,7 @@
 	              null,
 	              _react2.default.createElement(
 	                _reactRouter.Link,
-	                { to: 'weather' },
+	                { activeClassName: 'active', activeStyle: { fontWeight: 'bold' }, to: 'weather' },
 	                'Weather'
 	              )
 	            ),
@@ -28052,7 +28065,7 @@
 	              null,
 	              _react2.default.createElement(
 	                _reactRouter.Link,
-	                { to: 'About' },
+	                { activeClassName: 'active', activeStyle: { fontWeight: 'bold' }, to: 'about' },
 	                'About'
 	              )
 	            )
@@ -30377,6 +30390,63 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ }),
+/* 279 */
+/*!*********************************!*\
+  !*** ./src/components/about.js ***!
+  \*********************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 8);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(/*! react-router */ 179);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var About = function About(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h2',
+	      { className: 'text-center' },
+	      'About Page'
+	    ),
+	    _react2.default.createElement(
+	      'ol',
+	      null,
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/?location=Dallas' },
+	          'Dallas'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/?location=Rio' },
+	          'Rio, Brazil'
+	        )
+	      )
+	    )
+	  );
+	};
+	
+	exports.default = About;
 
 /***/ })
 /******/ ]);

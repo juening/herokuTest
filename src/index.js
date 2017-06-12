@@ -5,7 +5,7 @@ import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-ro
 import App from './components/app';
 import Home from './components/home';
 import Weather from './components/weather';
-
+import About from './components/about';
 
 //load foundation-sites
 require('style!css!foundation-sites/dist/foundation.min.css');
@@ -16,6 +16,7 @@ ReactDOM.render(
     <Route path='/' component={App}>
       <IndexRoute component={Home} />
       <Route path='weather' component={Weather} />
+      <Route path='about' component={About} />
     </Route>
   </Router>,
   document.getElementById('root'))

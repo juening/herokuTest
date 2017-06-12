@@ -20,10 +20,10 @@ class Header extends Component {
               <IndexLink activeClassName="active" activeStyle={{fontWeight: 'bold'}} to="/">React Weather</IndexLink>
             </li>
             <li>
-              <Link to="weather">Weather</Link>
+              <Link activeClassName="active" activeStyle={{fontWeight: 'bold'}} to="weather">Weather</Link>
             </li>
             <li>
-              <Link to="About">About</Link>
+              <Link activeClassName="active" activeStyle={{fontWeight: 'bold'}} to="about">About</Link>
             </li>
           </ul>
         </div>
