@@ -3,7 +3,7 @@ import React from 'react';
 const WeatherMessage = ({temp, location}) => {
   return (
     <div>
-      <h3>Temperature of {location} is {temp}</h3>
+      <h4 className="text-center">Temperature of {location} is {temp}</h4>
     </div>
   );
 }

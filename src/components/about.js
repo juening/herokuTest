@@ -12,6 +12,9 @@ const About = (props) => {
         <li>
           <Link to='/?location=Rio'>Rio, Brazil</Link>
         </li>
+        <li>
+          <a href="https://www.google.com" >Google</a>
+        </li>
       </ol>
     </div>
   );

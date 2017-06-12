@@ -28254,7 +28254,7 @@
 	        if (isLoading) {
 	          return _react2.default.createElement(
 	            'h3',
-	            null,
+	            { className: 'text-center' },
 	            'Fetching Weather'
 	          );
 	        } else if (temp && location) {
@@ -28264,6 +28264,11 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          'h1',
+	          { className: 'text-center' },
+	          'Get Weather'
+	        ),
 	        _react2.default.createElement(_weatherForm2.default, { onSearch: this.handleSearch }),
 	        renderMessage()
 	      );
@@ -28339,7 +28344,7 @@
 	          _react2.default.createElement('input', { type: 'text', placeholder: 'Location', ref: 'location' }),
 	          _react2.default.createElement(
 	            'button',
-	            null,
+	            { className: 'button expanded' },
 	            'Get Weather'
 	          )
 	        )
@@ -28359,7 +28364,7 @@
   \******************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -28376,14 +28381,14 @@
 	      location = _ref.location;
 	
 	  return _react2.default.createElement(
-	    'div',
+	    "div",
 	    null,
 	    _react2.default.createElement(
-	      'h3',
-	      null,
-	      'Temperature of ',
+	      "h4",
+	      { className: "text-center" },
+	      "Temperature of ",
 	      location,
-	      ' is ',
+	      " is ",
 	      temp
 	    )
 	  );
@@ -30440,6 +30445,15 @@
 	          _reactRouter.Link,
 	          { to: '/?location=Rio' },
 	          'Rio, Brazil'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          'a',
+	          { href: 'https://www.google.com' },
+	          'Google'
 	        )
 	      )
 	    )
