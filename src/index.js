@@ -11,7 +11,7 @@ import About from './components/about';
 require('style!css!foundation-sites/dist/foundation.min.css');
 $(document).foundation();
 
-require('style!css!../src/styles/app.css')
+require('style!css!sass!../src/styles/app.scss')
 
 ReactDOM.render(
   <Router history={hashHistory}>
