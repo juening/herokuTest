@@ -137,15 +137,17 @@
 	
 	var _weather2 = _interopRequireDefault(_weather);
 	
-	var _about = __webpack_require__(/*! ./components/about */ 279);
+	var _about = __webpack_require__(/*! ./components/about */ 276);
 	
 	var _about2 = _interopRequireDefault(_about);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	//load foundation-sites
-	__webpack_require__(/*! style!css!foundation-sites/dist/foundation.min.css */ 275);
+	__webpack_require__(/*! style!css!foundation-sites/dist/foundation.min.css */ 277);
 	$(document).foundation();
+	
+	__webpack_require__(/*! style!css!../src/styles/app.css */ 281);
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
@@ -28083,7 +28085,7 @@
 	              _react2.default.createElement(
 	                'li',
 	                null,
-	                _react2.default.createElement('input', { type: 'search', placeholder: 'Search Weather' })
+	                _react2.default.createElement('input', { type: 'search', placeholder: 'Search Weather by City' })
 	              ),
 	              _react2.default.createElement(
 	                'li',
@@ -28200,6 +28202,10 @@
 	
 	var _openWeatherMap2 = _interopRequireDefault(_openWeatherMap);
 	
+	var _errorModal = __webpack_require__(/*! ./errorModal */ 275);
+	
+	var _errorModal2 = _interopRequireDefault(_errorModal);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28217,7 +28223,8 @@
 	    var _this = _possibleConstructorReturn(this, (Weather.__proto__ || Object.getPrototypeOf(Weather)).call(this, props));
 	
 	    _this.state = {
-	      isLoading: false
+	      isLoading: false,
+	      errorMessage: null
 	    };
 	    _this.handleSearch = _this.handleSearch.bind(_this);
 	    //even in the parent component,
@@ -28229,16 +28236,15 @@
 	    value: function handleSearch(location) {
 	      var _this2 = this;
 	
-	      this.setState({ isLoading: true });
+	      this.setState({ isLoading: true, errorMessage: null });
 	      _openWeatherMap2.default.getTemp(location).then(function (temp) {
 	        _this2.setState({
 	          location: location,
 	          temp: temp,
 	          isLoading: false
 	        });
-	      }, function (errMessage) {
-	        _this2.setState({ isLoading: false });
-	        alert(errMessage);
+	      }, function (err) {
+	        _this2.setState({ isLoading: false, errorMessage: err.message });
 	      });
 	    }
 	  }, {
@@ -28247,7 +28253,8 @@
 	      var _state = this.state,
 	          isLoading = _state.isLoading,
 	          location = _state.location,
-	          temp = _state.temp;
+	          temp = _state.temp,
+	          errorMessage = _state.errorMessage;
 	
 	
 	      function renderMessage() {
@@ -28261,16 +28268,24 @@
 	          return _react2.default.createElement(_weatherMessage2.default, { location: location, temp: temp });
 	        }
 	      }
+	
+	      function renderError() {
+	        if (errorMessage) {
+	          return _react2.default.createElement(_errorModal2.default, { message: errorMessage });
+	        }
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
 	          'h1',
-	          { className: 'text-center' },
+	          { className: 'text-center page-title' },
 	          'Get Weather'
 	        ),
 	        _react2.default.createElement(_weatherForm2.default, { onSearch: this.handleSearch }),
-	        renderMessage()
+	        renderMessage(),
+	        renderError()
 	      );
 	    }
 	  }]);
@@ -28341,7 +28356,7 @@
 	        _react2.default.createElement(
 	          'form',
 	          { onSubmit: this.onFormSubmit },
-	          _react2.default.createElement('input', { type: 'text', placeholder: 'Location', ref: 'location' }),
+	          _react2.default.createElement('input', { type: 'search', placeholder: 'Search Weather by Location', ref: 'location' }),
 	          _react2.default.createElement(
 	            'button',
 	            { className: 'button expanded' },
@@ -28424,7 +28439,7 @@
 	        return res.data.main.temp;
 	      }
 	    }, function (err) {
-	      throw new Error(err);
+	      throw new Error(err.response.data.message);
 	    });
 	  }
 	};
@@ -30038,6 +30053,162 @@
 
 /***/ }),
 /* 275 */
+/*!**************************************!*\
+  !*** ./src/components/errorModal.js ***!
+  \**************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 8);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ErrorModal = function (_Component) {
+	  _inherits(ErrorModal, _Component);
+	
+	  function ErrorModal() {
+	    _classCallCheck(this, ErrorModal);
+	
+	    return _possibleConstructorReturn(this, (ErrorModal.__proto__ || Object.getPrototypeOf(ErrorModal)).apply(this, arguments));
+	  }
+	
+	  _createClass(ErrorModal, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var modal = new Foundation.Reveal($('#error-modal'));
+	      modal.open();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          title = _props.title,
+	          message = _props.message;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'error-modal', className: 'reveal small text-center', 'data-reveal': '' },
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          title
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          message
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'button hollow', 'data-close': '' },
+	            'Okay'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ErrorModal;
+	}(_react.Component);
+	
+	ErrorModal.defaultProps = {
+	  title: 'ErrorR'
+	};
+	
+	
+	ErrorModal.propTypes = {
+	  title: _react.PropTypes.string,
+	  message: _react.PropTypes.string.isRequired
+	};
+	exports.default = ErrorModal;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! jquery */ 7)))
+
+/***/ }),
+/* 276 */
+/*!*********************************!*\
+  !*** ./src/components/about.js ***!
+  \*********************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 8);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(/*! react-router */ 179);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var About = function About(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h1',
+	      { className: 'text-center page-title' },
+	      'About Page'
+	    ),
+	    _react2.default.createElement(
+	      'ol',
+	      null,
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/?location=Dallas' },
+	          'Dallas'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/?location=Rio' },
+	          'Rio, Brazil'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          'a',
+	          { href: 'https://www.google.com' },
+	          'Google'
+	        )
+	      )
+	    )
+	  );
+	};
+	
+	exports.default = About;
+
+/***/ }),
+/* 277 */
 /*!************************************************************************************!*\
   !*** ./~/style-loader!./~/css-loader!./~/foundation-sites/dist/foundation.min.css ***!
   \************************************************************************************/
@@ -30046,10 +30217,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../../css-loader!./foundation.min.css */ 276);
+	var content = __webpack_require__(/*! !../../css-loader!./foundation.min.css */ 278);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../style-loader/addStyles.js */ 278)(content, {});
+	var update = __webpack_require__(/*! ../../style-loader/addStyles.js */ 280)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -30066,13 +30237,13 @@
 	}
 
 /***/ }),
-/* 276 */
+/* 278 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./~/foundation-sites/dist/foundation.min.css ***!
   \*******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ 277)();
+	exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ 279)();
 	// imports
 	
 	
@@ -30083,7 +30254,7 @@
 
 
 /***/ }),
-/* 277 */
+/* 279 */
 /*!**************************************!*\
   !*** ./~/css-loader/lib/css-base.js ***!
   \**************************************/
@@ -30142,7 +30313,7 @@
 
 
 /***/ }),
-/* 278 */
+/* 280 */
 /*!*************************************!*\
   !*** ./~/style-loader/addStyles.js ***!
   \*************************************/
@@ -30397,70 +30568,50 @@
 
 
 /***/ }),
-/* 279 */
-/*!*********************************!*\
-  !*** ./src/components/about.js ***!
-  \*********************************/
+/* 281 */
+/*!************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./src/styles/app.css ***!
+  \************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	// load the styles
+	var content = __webpack_require__(/*! !../../~/css-loader!./app.css */ 282);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ../../~/style-loader/addStyles.js */ 280)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!../../node_modules/css-loader/index.js!./app.css", function() {
+				var newContent = require("!!../../node_modules/css-loader/index.js!./app.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ }),
+/* 282 */
+/*!*******************************************!*\
+  !*** ./~/css-loader!./src/styles/app.css ***!
+  \*******************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-base.js */ 279)();
+	// imports
 	
-	var _react = __webpack_require__(/*! react */ 8);
 	
-	var _react2 = _interopRequireDefault(_react);
+	// module
+	exports.push([module.id, ".page-title {\r\n  margin-top: 2.5rem;\r\n  margin-bottom: 2.5rem;\r\n}\r\n\r\ninput[type=search] {\r\n  box-shadow: none;\r\n}\r\n", ""]);
 	
-	var _reactRouter = __webpack_require__(/*! react-router */ 179);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var About = function About(props) {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h2',
-	      { className: 'text-center' },
-	      'About Page'
-	    ),
-	    _react2.default.createElement(
-	      'ol',
-	      null,
-	      _react2.default.createElement(
-	        'li',
-	        null,
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/?location=Dallas' },
-	          'Dallas'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'li',
-	        null,
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/?location=Rio' },
-	          'Rio, Brazil'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'li',
-	        null,
-	        _react2.default.createElement(
-	          'a',
-	          { href: 'https://www.google.com' },
-	          'Google'
-	        )
-	      )
-	    )
-	  );
-	};
-	
-	exports.default = About;
+	// exports
+
 
 /***/ })
 /******/ ]);

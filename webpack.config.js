@@ -21,6 +21,9 @@ module.exports = {
   },
   resolve: {
     root: __dirname,
+    alias: {
+      
+    },
     extensions: ['.js', '.jsx', '']
   },
   module: {

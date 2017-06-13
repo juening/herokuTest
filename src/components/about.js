@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 const About = (props) => {
   return (
     <div>
-      <h2 className="text-center">About Page</h2>
+      <h1 className="text-center page-title">About Page</h1>
       <ol>
         <li>
           <Link to='/?location=Dallas'>Dallas</Link>
