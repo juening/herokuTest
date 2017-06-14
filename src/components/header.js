@@ -8,7 +8,11 @@ class Header extends Component {
   }
   onSearch(e) {
     e.preventDefault();
-    alert('Not set yet');
+    var location = encodeURIComponent(this.refs.search.value);
+    if(location.length > 0) {
+      this.refs.search.value = '';
+      window.location.hash = '#/?location=' + location;
+    }
   }
   render() {
     return (
@@ -31,7 +35,7 @@ class Header extends Component {
           <form onSubmit={this.onSearch}>
             <ul className="menu">
               <li>
-                <input type="search" placeholder="Search Weather by City" />
+                <input type="search" placeholder="Search Weather by City" ref="search" />
               </li>
               <li>
                 <input type="submit" className="button" value="Get Weather" />

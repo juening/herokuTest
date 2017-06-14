@@ -155,7 +155,7 @@
 	  _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: _app2.default },
-	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _weather2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'weather', component: _weather2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'about', component: _about2.default })
 	  )
@@ -28025,7 +28025,11 @@
 	    key: 'onSearch',
 	    value: function onSearch(e) {
 	      e.preventDefault();
-	      alert('Not set yet');
+	      var location = encodeURIComponent(this.refs.search.value);
+	      if (location.length > 0) {
+	        this.refs.search.value = '';
+	        window.location.hash = '#/?location=' + location;
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -28085,7 +28089,7 @@
 	              _react2.default.createElement(
 	                'li',
 	                null,
-	                _react2.default.createElement('input', { type: 'search', placeholder: 'Search Weather by City' })
+	                _react2.default.createElement('input', { type: 'search', placeholder: 'Search Weather by City', ref: 'search' })
 	              ),
 	              _react2.default.createElement(
 	                'li',
@@ -28236,7 +28240,7 @@
 	    value: function handleSearch(location) {
 	      var _this2 = this;
 	
-	      this.setState({ isLoading: true, errorMessage: null });
+	      this.setState({ isLoading: true, errorMessage: null, temp: undefined, location: undefined });
 	      _openWeatherMap2.default.getTemp(location).then(function (temp) {
 	        _this2.setState({
 	          location: location,
@@ -28246,6 +28250,25 @@
 	      }, function (err) {
 	        _this2.setState({ isLoading: false, errorMessage: err.message });
 	      });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      console.log(this.props);
+	      var location = this.props.location.query.location;
+	      if (location && location.length > 0) {
+	        this.handleSearch(location);
+	        window.location.hash = '#/';
+	      }
+	    }
+	  }, {
+	    key: 'componentWillReveiveProps',
+	    value: function componentWillReveiveProps(newProps) {
+	      var location = newProps.location.query.location;
+	      if (location && location.length > 0) {
+	        this.handleSearch(location);
+	        window.location.hash = '#/';
+	      }
 	    }
 	  }, {
 	    key: 'render',

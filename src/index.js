@@ -16,7 +16,7 @@ require('style!css!sass!../src/styles/app.scss')
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path='/' component={App}>
-      <IndexRoute component={Home} />
+      <IndexRoute component={Weather} />
       <Route path='weather' component={Weather} />
       <Route path='about' component={About} />
     </Route>
